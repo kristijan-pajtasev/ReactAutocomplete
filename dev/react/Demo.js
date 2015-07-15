@@ -13,9 +13,30 @@ var data = [
 ];
 
 var Demo = React.createClass({ 
+	getInitialState: function() {
+		return { selected: 3 };
+	},
+	changeState: function() {
+		this.setState({val: Math.random()});
+	},
+	setSelected: function() {
+		this.setState({selected: 7})
+	},
+	getValue: function() {
+		this.refs.getValue.getDOMNode().innerText = this.refs.ac.state.value;
+	},
+	liveUpdate: function(id) {
+		this.refs.liveValue.getDOMNode().innerText = id;
+	},
 	render: function() {
 		return <div>Hello, world
-					<Autocomplete selected={3} data={data} />
+					<button onClick={this.changeState}>Change state</button>
+					<button onClick={this.setSelected}>Set selected</button>
+					<br />
+					<div><button onClick={this.getValue}>Get value</button> <span ref="getValue"></span></div>
+					<div>Live update: <span ref="liveValue"></span></div>
+					<Autocomplete ref="ac" onChange={this.liveUpdate} selected={this.state.selected} data={data} />
+					
 				</div>;
 	}
 });
